@@ -4,10 +4,13 @@
 # The take_turn method is the crux of this problem. The take_turn method takes a string representing the guess. It should create a new Turn object with the appropriate guess and Card. It should store this new Turn, as well as return it from the take_turn method. Also, when the take_turn method is called, the Round should move on to the next card in the deck.
 
 class Round
-  attr_reader :deck, :turns
+  attr_reader :deck, :turns, :new_turn, :guess, :number_correct
   def initialize(deck)
+    @guess = guess
     @deck = deck
     @turns = []
+    @number_correct = 0
+    @new_turn = new_turn
   end
 
   def current_card
@@ -18,10 +21,21 @@ class Round
     # creates new Turn object
     new_turn = Turn.new(guess, current_card)
     # stores itself
-    @turns << new_turn
+    @turns << new_turn.guess
+    # removes after use
     @deck.cards.shift
     #returns itself
     new_turn
+  end
 
+  def correct_guesses
+   
+    @number_correct += 1
+    # we have an array of guesses inside turns
+    # we have an array of cards with answer
+    # answer must equal guess to be << to correct 
+    # counter counts number of elements in array
+
+    
   end
 end

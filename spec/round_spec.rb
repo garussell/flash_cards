@@ -73,7 +73,7 @@ describe "#take_turn" do
 
     expect(round.turns.include?("Juneau")).to be true
   end
-
+  
   it 'removes the card you already guessed on' do
     card_1 = Card.new("What is the capital of Alaska?", "Juneau", :Geography)
     card_2 = Card.new("The Viking spacecraft sent back to Earth photographs and reports about the surface of which planet?", "Mars", :STEM)
@@ -90,11 +90,32 @@ describe "#take_turn" do
     new_turn = round.take_turn("Juneau")
 
     expect(round.deck.count).to eq(2)
+
   end
 end
 
+describe
+
 describe "#correct?" do
-  xit 'will tell you if it is correct' do
+  it 'will tell you if the guess is correct' do
+    card_1 = Card.new("What is the capital of Alaska?", "Juneau", :Geography)
+    card_2 = Card.new("The Viking spacecraft sent back to Earth photographs and reports about the surface of which planet?", "Mars", :STEM)
+    
+    cards = [card_1, card_2]
+    deck = Deck.new(cards)
+    round = Round.new(deck)
+
+    deck.add_to_deck(card_1)
+    deck.add_to_deck(card_2)
+ 
+    new_turn = round.take_turn("Juneau")
+
+    expect(new_turn.correct?).to be true
+  end
+end
+
+describe "#number_correct" do
+  it 'will tell you how many you got right' do
     card_1 = Card.new("What is the capital of Alaska?", "Juneau", :Geography)
     card_2 = Card.new("The Viking spacecraft sent back to Earth photographs and reports about the surface of which planet?", "Mars", :STEM)
     card_3 = Card.new("Describe in words the exact direction that is 697.5° clockwise from due north?", "North north west", :STEM)
@@ -103,10 +124,18 @@ describe "#correct?" do
     deck = Deck.new(cards)
     round = Round.new(deck)
 
+    deck.add_to_deck(card_1)
+    deck.add_to_deck(card_2)
+    deck.add_to_deck(card_3)
+
     new_turn = round.take_turn("Juneau")
-require 'pry';binding.pry
-    expect(new_turn.correct?).to be true
+    new_turn = round.take_turn("Japan?")
+    new_turn = round.take_turn("I have no sense of direction")
+
+    # expect(round.turns.include?("Juneau")).to be true
+    expect(round.correct_guesses).to eq(1)
   end
+
 end
 
 end
